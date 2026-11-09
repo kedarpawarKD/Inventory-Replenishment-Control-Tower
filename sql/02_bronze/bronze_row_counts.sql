@@ -1,19 +1,34 @@
 
+/*
+Project: Inventory & Replenishment Control Tower
+Layer: Bronze
+Purpose: Verify imported record counts
+Database: InventoryReplenishmentDW
+*/
+
 USE InventoryReplenishmentDW;
 GO
 
-SELECT COUNT(*) AS product_rows
-FROM bronze.products;
-
-SELECT COUNT(*) AS supplier_rows
-FROM bronze.suppliers;
-
-SELECT COUNT(*) AS warehouse_rows
-FROM bronze.warehouses;
-
-SELECT COUNT(*) AS inventory_daily_rows
-FROM bronze.inventory_daily;
-
-SELECT TOP (10) *
-FROM bronze.inventory_daily;
-
+SELECT 'customers' AS table_name, COUNT_BIG(*) AS row_count FROM bronze.customers
+UNION ALL
+SELECT 'date', COUNT_BIG(*) FROM bronze.date
+UNION ALL
+SELECT 'goods_receipts', COUNT_BIG(*) FROM bronze.goods_receipts
+UNION ALL
+SELECT 'inventory_daily', COUNT_BIG(*) FROM bronze.inventory_daily
+UNION ALL
+SELECT 'product_location', COUNT_BIG(*) FROM bronze.product_location
+UNION ALL
+SELECT 'products', COUNT_BIG(*) FROM bronze.products
+UNION ALL
+SELECT 'purchase_orders', COUNT_BIG(*) FROM bronze.purchase_orders
+UNION ALL
+SELECT 'sales', COUNT_BIG(*) FROM bronze.sales
+UNION ALL
+SELECT 'stock_movements', COUNT_BIG(*) FROM bronze.stock_movements
+UNION ALL
+SELECT 'suppliers', COUNT_BIG(*) FROM bronze.suppliers
+UNION ALL
+SELECT 'warehouses', COUNT_BIG(*) FROM bronze.warehouses
+ORDER BY table_name;
+GO
